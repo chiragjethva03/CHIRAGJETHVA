@@ -56,7 +56,7 @@ Optional environment variables (set before `npm run build`, e.g. in a `.env.prod
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 measurement ID (`G-XXXXXXX`). Analytics loads only when set. |
+| `NEXT_PUBLIC_GA_ID` | Overrides the Google Analytics 4 measurement ID (defaults to `G-QN4TNES6SY`). |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console HTML-tag verification code. |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster Tools verification code. |
 | `NEXT_PUBLIC_SITE_URL` | Overrides the default `https://chiragjethva.tech` (e.g. for staging). |

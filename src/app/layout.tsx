@@ -21,7 +21,8 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
-const gaId = process.env.NEXT_PUBLIC_GA_ID;
+// Google Analytics 4 measurement ID (public by design); NEXT_PUBLIC_GA_ID can override it.
+const gaId = process.env.NEXT_PUBLIC_GA_ID ?? "G-QN4TNES6SY";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
