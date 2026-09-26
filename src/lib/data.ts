@@ -52,7 +52,7 @@ export const about = {
     { value: 2, suffix: "+", label: "Years shipping production code" },
     { value: 4, suffix: "", label: "Live client sites in production" },
     { value: 5, suffix: "+", label: "Products designed & built" },
-    { value: 3, suffix: "", label: "Teams & studios worked with" },
+    { value: 1, suffix: "", label: "App live on Google Play" },
   ],
 };
 
@@ -92,53 +92,56 @@ export type Project = {
   highlights: string[];
   tech: string[];
   url?: string;
+  // Secondary live link shown on the card, e.g. an app store listing.
+  extra?: { label: string; href: string };
   hue: [string, string];
   glyph: string;
 };
 
 export const projects: Project[] = [
   {
-    title: "Clothes Bazzar",
-    kind: "E-commerce marketplace",
-    year: "2026",
-    status: "In development",
+    title: "ClothesBazzar",
+    kind: "E-commerce marketplace · Full stack",
+    year: "Live",
     description:
-      "An India-focused clothing marketplace tackling high commissions, return fraud and delayed seller payouts.",
+      "A complete marketplace ecosystem: a buyer Android app on Google Play, a seller portal, an admin panel, and the backend and database behind all three.",
     highlights: [
-      "Flutter app, Next.js seller dashboard, NestJS microservices",
-      "Escrow-style payout logic for seller payment security",
-      "PostgreSQL for transactional integrity",
+      "Node.js & Express services behind an API gateway",
+      "Payments, courier, SMS OTP, Google sign-in & push notifications",
+      "Seller onboarding, inventory, orders & payouts; admin approval & oversight",
     ],
-    tech: ["Flutter", "Next.js", "NestJS", "PostgreSQL", "Firebase Auth"],
+    tech: ["Android app", "Node.js", "Express", "API gateway", "PostgreSQL"],
+    url: "https://clothesbazzar.in",
+    extra: { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.clothesbazzar.app" },
     hue: ["#c8ff2e", "#1f6f5c"],
     glyph: "CB",
   },
   {
     title: "CloudVentors",
-    kind: "Cloud solutions platform",
+    kind: "DevOps & cloud infrastructure · SaaS",
     year: "Live",
     description:
-      "A high-performance marketing and services platform for a cloud solutions company, tuned for page speed and lead conversion.",
+      "A web platform for a DevOps and cloud infrastructure partner, turning a large technical service catalogue into something a prospective client grasps in the first minute.",
     highlights: [
-      "Built, deployed and hosted end to end",
-      "Performance-first Next.js build",
-      "Domain & hosting configuration",
+      "A dozen-plus service areas and engagement tiers, structured for quick scanning",
+      "Business messaging turned into clear, usable UI",
+      "Responsive across screen sizes, no cut-down mobile version",
     ],
-    tech: ["Next.js", "Tailwind CSS"],
+    tech: ["Next.js", "React", "Tailwind CSS", "Responsive UI"],
     url: "https://cloudventors.com",
     hue: ["#7aa2ff", "#231a5c"],
     glyph: "CV",
   },
   {
     title: "Shree Gayatri Agency",
-    kind: "Business website",
+    kind: "Logistics · C&F · Transportation",
     year: "Live",
     description:
-      "A production website for a growing agency, delivered from requirements to launch with ongoing client support.",
+      "A digital platform for an Ahmedabad-based C&F, transport and logistics company trading since 1997, making an established offline business credible online.",
     highlights: [
-      "Requirement gathering to deployment",
-      "Responsive UI with Tailwind CSS",
-      "Stable live performance",
+      "Company story, services and Gujarat-wide coverage at a glance",
+      "Trust signals: 28+ years, 45+ transport partners, 20+ warehouses",
+      "Mobile-friendly for customers used to doing business by phone",
     ],
     tech: ["Next.js", "React", "Tailwind CSS"],
     url: "https://www.shreegayatriagency.com",
@@ -184,7 +187,7 @@ export const journey = [
     org: "KnC Future Tech · Freelance",
     points: [
       "Custom full-stack apps for clients with Next.js, React, Node.js and MongoDB",
-      "Two live production launches, including hosting and domains",
+      "Live client platforms plus the ClothesBazzar marketplace and its Google Play app",
       "End-to-end delivery: requirements, system design, build, deploy, support",
     ],
   },
@@ -225,8 +228,8 @@ export const stack = [
   { group: "Frontend", items: ["React.js", "Next.js", "Tailwind CSS", "Responsive UI"] },
   { group: "Backend", items: ["Node.js", "Express.js", "NestJS", "REST APIs", "Auth Systems", "Microservices"] },
   { group: "Databases", items: ["PostgreSQL", "MongoDB", "Firebase"] },
-  { group: "Mobile", items: ["Flutter", "Dart"] },
-  { group: "Languages", items: ["JavaScript (ES6+)", "Dart"] },
+  { group: "Mobile & Delivery", items: ["Flutter", "Android release builds", "Play Store publishing", "Linux servers", "PM2"] },
+  { group: "Languages", items: ["JavaScript (ES6+)", "TypeScript", "Dart"] },
   { group: "Tools", items: ["Git", "GitHub", "Postman", "VS Code", "Figma"] },
 ];
 
@@ -273,7 +276,7 @@ export const faqs = [
   },
   {
     q: "What can you build for my business?",
-    a: "Business websites, web applications, admin dashboards, e-commerce platforms, REST APIs and backends, and cross-platform mobile apps with Flutter. I handle the whole journey: requirements, design, development, deployment, hosting and ongoing support.",
+    a: "Business websites, web applications, admin dashboards, e-commerce marketplaces with seller and admin panels, REST APIs and backends, and Android apps published on Google Play. I handle the whole journey: requirements, design, development, deployment, hosting and ongoing support.",
   },
   {
     q: "Which technologies do you work with?",

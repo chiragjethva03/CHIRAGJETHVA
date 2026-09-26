@@ -101,12 +101,36 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
                 </span>
               ))}
             </div>
-            {p.url && (
-              <span className="inline-flex items-center gap-2 text-sm text-volt">
-                Visit live site
-                <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
-              </span>
-            )}
+            <div className="flex flex-wrap items-center gap-5">
+              {p.url && (
+                <span className="inline-flex items-center gap-2 text-sm text-volt">
+                  Visit live site
+                  <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
+                </span>
+              )}
+              {p.extra && (
+                // The whole card is already a link, so this can't be a nested <a>.
+                <span
+                  role="link"
+                  tabIndex={0}
+                  data-cursor={p.extra.label}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(p.extra!.href, "_blank", "noopener");
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key !== "Enter") return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(p.extra!.href, "_blank", "noopener");
+                  }}
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-line px-3 py-1 text-sm text-bone/80 transition-colors hover:border-volt hover:text-volt"
+                >
+                  {p.extra.label} ↗
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
