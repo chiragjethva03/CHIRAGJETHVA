@@ -46,7 +46,7 @@ export function Contact() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[60vmax] w-[60vmax] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--volt)_12%,transparent),transparent_60%)]" />
 
       <div className="relative mx-auto max-w-[1600px] px-4 pt-28 md:px-10 md:pt-40">
-        <SectionLabel no="08">Contact</SectionLabel>
+        <SectionLabel no="09">Contact</SectionLabel>
 
         <div className="mt-10 grid items-center gap-14 lg:grid-cols-[1.25fr_1fr] [&>*]:min-w-0">
           <RevealLines

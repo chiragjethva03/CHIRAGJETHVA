@@ -8,6 +8,7 @@ import { About } from "@/components/About";
 import { Services } from "@/components/Services";
 import { Work } from "@/components/Work";
 import { Testimonials } from "@/components/Testimonials";
+import { Pricing } from "@/components/Pricing";
 import { Journey } from "@/components/Journey";
 import { Stack } from "@/components/Stack";
 import { Contact } from "@/components/Contact";
@@ -32,6 +33,7 @@ export default function Home() {
         <Services />
         <Work />
         <Testimonials />
+        <Pricing />
         <Journey />
         <Stack />
         <Faq />

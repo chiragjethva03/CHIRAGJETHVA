@@ -127,3 +127,12 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Price figures roll up when the currency changes. */
+.price-in {
+  animation: price-in 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes price-in {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

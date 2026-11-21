@@ -69,6 +69,7 @@ export function jsonLd() {
     url: siteUrl,
     image: `${siteUrl}/opengraph-image`,
     email: profile.email,
+    priceRange: "₹9,999+",
     description:
       "Website development, web application development, backend and API development, and Flutter mobile app development for startups and businesses in Surat, across Gujarat and India, and remote clients worldwide.",
     founder: { "@id": `${siteUrl}/#person` },

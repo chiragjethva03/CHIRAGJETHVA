@@ -58,17 +58,28 @@ function ProjectArt({ p }: { p: Project }) {
 }
 
 function ProjectCard({ p, i }: { p: Project; i: number }) {
-  const Wrapper = p.url ? "a" : "div";
-  const linkProps = p.url
-    ? { href: p.url, target: "_blank", rel: "noreferrer", "data-cursor": "Visit" }
-    : { "data-cursor": p.status ? "Soon" : "Case" };
-
   return (
-    <div className="work-card sticky top-[10vh] flex h-[80vh] min-h-[560px] items-start justify-center pt-4" style={{ zIndex: i + 1 }}>
-      <Wrapper
-        {...linkProps}
-        className="work-inner group grid h-full w-full origin-top grid-rows-[auto_1fr] gap-6 overflow-hidden rounded-[2rem] border border-line bg-ink-2 p-5 md:grid-cols-[1fr_1.25fr] md:grid-rows-1 md:gap-10 md:p-8"
+    // Large screens stack the cards with sticky positioning; smaller screens get a plain list so
+    // nothing is clipped by a fixed card height.
+    <div
+      className="work-card relative py-2 lg:sticky lg:top-[10vh] lg:flex lg:h-[80vh] lg:min-h-[560px] lg:items-start lg:justify-center lg:py-0 lg:pt-4"
+      style={{ zIndex: i + 1 }}
+    >
+      <div
+        data-cursor={p.url ? undefined : p.status ? "Soon" : "Case"}
+        className="work-inner group relative grid w-full origin-top gap-6 overflow-hidden rounded-[2rem] border border-line bg-ink-2 p-5 md:p-8 lg:h-full lg:grid-cols-[1fr_1.25fr] lg:gap-10"
       >
+        {p.url && (
+          // Stretched link: the whole card opens the live site, while the extra link below stays a separate <a>.
+          <a
+            href={p.url}
+            target="_blank"
+            rel="noreferrer"
+            data-cursor="Visit"
+            aria-label={`${p.title}: visit live site`}
+            className="absolute inset-0 z-[1] rounded-[inherit]"
+          />
+        )}
         <div className="flex flex-col justify-between gap-6">
           <div>
             <div className="flex items-center justify-between">
@@ -85,7 +96,7 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
             <p className="mt-5 max-w-md text-sm leading-relaxed text-bone/75 md:text-base">{p.description}</p>
           </div>
 
-          <div className="hidden space-y-5 md:block">
+          <div className="space-y-5">
             <ul className="space-y-2">
               {p.highlights.map((h) => (
                 <li key={h} className="flex gap-3 text-sm text-bone/70">
@@ -109,33 +120,23 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
                 </span>
               )}
               {p.extra && (
-                // The whole card is already a link, so this can't be a nested <a>.
-                <span
-                  role="link"
-                  tabIndex={0}
+                // Sits above the stretched card link, so it opens its own URL.
+                <a
+                  href={p.extra.href}
+                  target="_blank"
+                  rel="noreferrer"
                   data-cursor={p.extra.label}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.open(p.extra!.href, "_blank", "noopener");
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key !== "Enter") return;
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.open(p.extra!.href, "_blank", "noopener");
-                  }}
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-line px-3 py-1 text-sm text-bone/80 transition-colors hover:border-volt hover:text-volt"
+                  className="relative z-[2] inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-sm text-bone/80 transition-colors hover:border-volt hover:text-volt"
                 >
                   {p.extra.label} ↗
-                </span>
+                </a>
               )}
             </div>
           </div>
         </div>
 
         <ProjectArt p={p} />
-      </Wrapper>
+      </div>
     </div>
   );
 }
@@ -144,7 +145,9 @@ export function Work() {
   const root = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    // The stacking dim/scale only makes sense where cards are sticky (lg and up).
+    const mm = gsap.matchMedia(root.current ?? undefined);
+    mm.add("(min-width: 1024px)", () => {
       const cards = gsap.utils.toArray<HTMLElement>(".work-card");
       cards.forEach((card, i) => {
         if (i === cards.length - 1) return;
@@ -163,7 +166,9 @@ export function Work() {
           },
         });
       });
+    });
 
+    const ctx = gsap.context(() => {
       gsap.utils.toArray<HTMLElement>(".art-glyph").forEach((g) => {
         gsap.fromTo(
           g,
@@ -172,7 +177,10 @@ export function Work() {
         );
       });
     }, root);
-    return () => ctx.revert();
+    return () => {
+      mm.revert();
+      ctx.revert();
+    };
   }, []);
 
   return (

@@ -26,6 +26,7 @@ export const socials = [
 export const navLinks = [
   { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
+  { label: "Pricing", href: "#pricing" },
   { label: "Journey", href: "#journey" },
   { label: "Contact", href: "#contact" },
 ];
@@ -268,6 +269,97 @@ export const testimonials = [
   },
 ];
 
+// Freelance pricing. "from" prices are starting points; the final quote follows a scoping call.
+// INR is benchmarked to the Indian freelance market; USD is a separate international rate, not a conversion.
+// Extras carry per-currency copy too, since what a plan includes can differ by market.
+export type Currency = "INR" | "USD";
+
+export const pricing = {
+  note: "Fixed-price quotes after a free 30-minute scoping call. Milestone-based payments, source code and full ownership handed over at delivery.",
+  fineprint: "Prices exclude domain, hosting, paid APIs and other third-party fees.",
+  plans: [
+    {
+      no: "01",
+      name: "Launch",
+      tagline: "A fast, polished website that makes your business credible online.",
+      from: { INR: 9999, USD: 199 },
+      unit: "project",
+      timeline: "1–2 weeks",
+      features: [
+        "Up to 6 responsive pages in Next.js",
+        "Custom design, no templates",
+        "On-page SEO, sitemap & Google Analytics",
+        "Contact form & WhatsApp / call buttons",
+        "Domain, hosting & SSL setup",
+        "60 days of free support",
+      ],
+      featured: false,
+    },
+    {
+      no: "02",
+      name: "Growth",
+      tagline: "A custom web app or store with a dashboard to run it.",
+      from: { INR: 39999, USD: 499 },
+      unit: "project",
+      timeline: "3–6 weeks",
+      features: [
+        "Everything in Launch",
+        "Custom backend & REST APIs in Node.js",
+        "Login, roles & admin dashboard",
+        "Database design in PostgreSQL or MongoDB",
+        "Payments, email / SMS & third-party integrations",
+        "120 days of free support",
+      ],
+      featured: true,
+    },
+    {
+      no: "03",
+      name: "Product",
+      tagline: "A complete product: web, mobile app and the backend behind both.",
+      from: { INR: 149999, USD: 1799 },
+      unit: "project",
+      timeline: "8–12 weeks",
+      features: [
+        "Everything in Growth",
+        "Flutter app for Android & iOS",
+        "Shared backend with scalable architecture",
+        "Seller, vendor or multi-role panels",
+        "Play Store & App Store publishing",
+        "365 days of free support",
+      ],
+      featured: false,
+    },
+  ],
+  extras: [
+    {
+      name: "Hourly / ad-hoc work",
+      body: { INR: "Bug fixes, new features or code reviews on an existing project.", USD: "Bug fixes, new features or code reviews on an existing project." },
+      price: { INR: 999, USD: 10 },
+      unit: "hour",
+    },
+    {
+      name: "Care plan",
+      body: { INR: "Updates, backups, monitoring and up to 8 hours of changes each month.", USD: "Updates, backups, monitoring and up to 16 hours of changes each month." },
+      price: { INR: 4999, USD: 99 },
+      unit: "month",
+    },
+    {
+      name: "Dedicated developer",
+      body: { INR: "Full-time on your product, embedded in your team and sprints.", USD: "Full-time on your product, embedded in your team and sprints." },
+      price: { INR: 39999, USD: 299 },
+      unit: "month",
+    },
+  ],
+};
+
+// Pricing figures for FAQ copy, read from `pricing` so the answers always match the Pricing section.
+const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
+const [launch, growth, product] = pricing.plans;
+const [hourly, care, dedicated] = pricing.extras;
+const supportDays = (p: (typeof pricing.plans)[number]) =>
+  p.features.find((f) => f.includes("free support"))?.match(/\d+/)?.[0];
+
 // Visible on the page and mirrored into FAQ structured data; answers people searching for local developers.
 export const faqs = [
   {
@@ -276,7 +368,11 @@ export const faqs = [
   },
   {
     q: "What can you build for my business?",
-    a: "Business websites, web applications, admin dashboards, e-commerce marketplaces with seller and admin panels, REST APIs and backends, and Android apps published on Google Play. I handle the whole journey: requirements, design, development, deployment, hosting and ongoing support.",
+    a: "Business websites, web applications, admin dashboards, e-commerce marketplaces with seller and admin panels, REST APIs and backends, and Flutter apps for Android and iOS. I handle the whole journey: requirements, design, development, deployment, hosting and ongoing support, with free support included in every plan and a monthly care plan after that.",
+  },
+  {
+    q: "How much does a website or app cost?",
+    a: `Business websites start at ${inr(launch.from.INR)}, custom web apps and online stores with an admin dashboard at ${inr(growth.from.INR)}, and complete products with a web app, Flutter mobile app and backend at ${inr(product.from.INR)}. They include ${supportDays(launch)}, ${supportDays(growth)} and ${supportDays(product)} days of free support respectively. Ongoing work is ${inr(hourly.price.INR)} an hour, ${inr(care.price.INR)} a month on a care plan, or ${inr(dedicated.price.INR)} a month for a dedicated developer. International clients pay in USD, starting at ${usd(launch.from.USD)}. Prices exclude domain, hosting and third-party fees.`,
   },
   {
     q: "Which technologies do you work with?",
@@ -288,6 +384,6 @@ export const faqs = [
   },
   {
     q: "How do we get started?",
-    a: "Book a 30-minute call. We'll talk through your idea, what you need and your timeline, and I'll suggest the simplest way to build it.",
+    a: "Book a free 30-minute scoping call. We'll talk through your idea, what you need and your timeline, and I'll send a fixed-price quote for the simplest way to build it. Payments are split into milestones, and you own the source code at delivery.",
   },
 ];

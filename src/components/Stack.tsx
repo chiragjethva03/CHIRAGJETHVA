@@ -21,7 +21,7 @@ export function Stack() {
   return (
     <section className="relative mx-auto max-w-[1600px] px-4 pb-28 md:px-10 md:pb-40">
       <div className="mb-12 space-y-8 md:mb-16">
-        <SectionLabel no="06">Toolkit</SectionLabel>
+        <SectionLabel no="07">Toolkit</SectionLabel>
         <RevealLines
           className="text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.95] tracking-[-0.05em]"
           lines={[

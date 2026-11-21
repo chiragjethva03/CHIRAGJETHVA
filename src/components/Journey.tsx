@@ -46,7 +46,7 @@ export function Journey() {
       <div className="grid gap-12 md:grid-cols-12">
         <div className="md:col-span-4">
           <div className="space-y-8 md:sticky md:top-32">
-            <SectionLabel no="05">Journey</SectionLabel>
+            <SectionLabel no="06">Journey</SectionLabel>
             <RevealLines
               className="text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.05em]"
               lines={[

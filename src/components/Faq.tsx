@@ -12,7 +12,7 @@ export function Faq() {
       <div className="grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
           <div className="space-y-8 md:sticky md:top-32">
-            <SectionLabel no="07">FAQ</SectionLabel>
+            <SectionLabel no="08">FAQ</SectionLabel>
             <RevealLines
               className="text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.05em]"
               lines={[
