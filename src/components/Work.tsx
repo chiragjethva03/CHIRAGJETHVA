@@ -14,7 +14,7 @@ function ProjectArt({ p }: { p: Project }) {
 
   return (
     <div
-      className="relative h-full min-h-[260px] overflow-hidden rounded-2xl"
+      className="relative h-full min-h-[110px] overflow-hidden rounded-2xl lg:min-h-[260px]"
       style={{ background: `radial-gradient(120% 120% at 20% 10%, ${a}55, transparent 55%), radial-gradient(90% 90% at 90% 100%, ${b}, transparent 70%), #0b0b10` }}
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:2.5rem_2.5rem]" />
@@ -59,15 +59,15 @@ function ProjectArt({ p }: { p: Project }) {
 
 function ProjectCard({ p, i }: { p: Project; i: number }) {
   return (
-    // Large screens stack the cards with sticky positioning; smaller screens get a plain list so
-    // nothing is clipped by a fixed card height.
+    // Cards stack on every screen size. Below lg the card is taller and the artwork takes only the
+    // space the text leaves, so the text always fits instead of being clipped.
     <div
-      className="work-card relative py-2 lg:sticky lg:top-[10vh] lg:flex lg:h-[80vh] lg:min-h-[560px] lg:items-start lg:justify-center lg:py-0 lg:pt-4"
+      className="work-card sticky top-[4svh] flex h-[90svh] min-h-[500px] items-start justify-center pt-2 lg:top-[10vh] lg:h-[80vh] lg:min-h-[560px] lg:pt-4"
       style={{ zIndex: i + 1 }}
     >
       <div
         data-cursor={p.url ? undefined : p.status ? "Soon" : "Case"}
-        className="work-inner group relative grid w-full origin-top gap-6 overflow-hidden rounded-[2rem] border border-line bg-ink-2 p-5 md:p-8 lg:h-full lg:grid-cols-[1fr_1.25fr] lg:gap-10"
+        className="work-inner group relative grid h-full w-full origin-top grid-rows-[auto_1fr] gap-5 overflow-hidden rounded-[2rem] border border-line bg-ink-2 p-5 md:p-8 lg:grid-cols-[1fr_1.25fr] lg:grid-rows-1 lg:gap-10"
       >
         {p.url && (
           // Stretched link: the whole card opens the live site, while the extra link below stays a separate <a>.
@@ -97,7 +97,8 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
           </div>
 
           <div className="space-y-5">
-            <ul className="space-y-2">
+            {/* Highlights and tags need the side-by-side layout's room; the links always show. */}
+            <ul className="hidden space-y-2 lg:block">
               {p.highlights.map((h) => (
                 <li key={h} className="flex gap-3 text-sm text-bone/70">
                   <span className="mt-[0.45em] h-1 w-1 shrink-0 rounded-full bg-volt" />
@@ -105,7 +106,7 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
                 </li>
               ))}
             </ul>
-            <div className="flex flex-wrap gap-2">
+            <div className="hidden flex-wrap gap-2 lg:flex">
               {p.tech.map((t) => (
                 <span key={t} className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-bone/70">
                   {t}
@@ -145,9 +146,7 @@ export function Work() {
   const root = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    // The stacking dim/scale only makes sense where cards are sticky (lg and up).
-    const mm = gsap.matchMedia(root.current ?? undefined);
-    mm.add("(min-width: 1024px)", () => {
+    const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(".work-card");
       cards.forEach((card, i) => {
         if (i === cards.length - 1) return;
@@ -166,9 +165,7 @@ export function Work() {
           },
         });
       });
-    });
 
-    const ctx = gsap.context(() => {
       gsap.utils.toArray<HTMLElement>(".art-glyph").forEach((g) => {
         gsap.fromTo(
           g,
@@ -177,10 +174,7 @@ export function Work() {
         );
       });
     }, root);
-    return () => {
-      mm.revert();
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
